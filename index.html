@@ -1,0 +1,272 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.app{font-family:var(--font-sans,system-ui,sans-serif);background:var(--color-background-primary)}
+
+.hdr{background:#EBF3FD;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-lg);padding:1.5rem 1.75rem;display:flex;align-items:center;gap:1.25rem;margin-bottom:1.25rem}
+.hdr-icon{width:56px;height:56px;background:#185FA5;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr-icon i{font-size:28px;color:#E6F1FB}
+.hdr-title{color:#0C447C;font-size:1.2rem;font-weight:500;line-height:1.25}
+.hdr-sub{color:#185FA5;font-size:0.8rem;margin-top:3px;display:flex;align-items:center;gap:5px}
+
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem}
+
+.drop{border:1.5px dashed #B5D4F4;border-radius:var(--border-radius-lg);padding:2.75rem 1rem;text-align:center;cursor:pointer;background:#F4F9FE;transition:all 0.2s}
+.drop:hover,.drop.on{border-color:#185FA5;background:#E6F1FB}
+.drop-icon{width:52px;height:52px;background:#E6F1FB;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.9rem}
+.drop-icon i{font-size:26px;color:#185FA5}
+.drop p{font-size:0.95rem;color:#0C447C;font-weight:500}
+.drop span{font-size:0.78rem;color:#378ADD;margin-top:4px;display:block}
+#fi{display:none}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.1rem 0}
+.sc{background:#F4F9FE;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:1rem;text-align:center}
+.sc .n{font-size:1.6rem;font-weight:500;color:#0C447C}
+.sc .l{font-size:0.72rem;color:#378ADD;margin-top:2px;text-transform:uppercase;letter-spacing:0.04em}
+.sc.g{background:#F2F9EC;border-color:#C0DD97}.sc.g .n{color:#27500A}.sc.g .l{color:#3B6D11}
+.sc.a{background:#FDF6EC;border-color:#FAC775}.sc.a .n{color:#633806}.sc.a .l{color:#854F0B}
+
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:1rem 0}
+.bar input[type=text]{flex:1;min-width:150px;padding:8px 12px;font-size:0.875rem;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);background:#F4F9FE;color:var(--color-text-primary)}
+.bar input[type=text]:focus{outline:none;border-color:#185FA5;background:#E6F1FB}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;font-size:0.85rem;font-weight:500;border-radius:var(--border-radius-md);border:0.5px solid;cursor:pointer;white-space:nowrap;transition:all 0.15s}
+.btn:active{transform:scale(0.97)}
+.btn-dl{background:#EAF3DE;color:#27500A;border-color:#C0DD97}.btn-dl:hover{background:#C0DD97}
+.btn-cl{background:#FCEBEB;color:#791F1F;border-color:#F7C1C1}.btn-cl:hover{background:#F7C1C1}
+.btn-up{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4}.btn-up:hover{background:#B5D4F4}
+
+.tw{border:0.5px solid #B5D4F4;border-radius:var(--border-radius-lg);overflow:hidden;max-height:400px;overflow-y:auto;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:0.82rem;table-layout:fixed}
+thead{position:sticky;top:0;z-index:2}
+th{background:#185FA5;color:#E6F1FB;font-weight:500;padding:9px 10px;text-align:left;font-size:0.75rem;letter-spacing:0.03em}
+th:nth-child(1){width:42px}
+th:nth-child(2){width:22%}
+th:nth-child(3){width:26%}
+th:nth-child(4){width:10%}
+th:nth-child(5){width:28%}
+th:nth-child(6){width:13%;background:#0C447C}
+td{padding:7px 10px;border-bottom:0.5px solid #E6F1FB;color:var(--color-text-primary);word-break:break-word;vertical-align:top}
+tr:nth-child(even) td{background:#F8FBFF}
+tr:hover td{background:#EBF3FD}
+.rn{color:#378ADD;font-size:0.74rem}
+.ph{display:inline-flex;align-items:center;gap:5px;background:#EAF3DE;color:#27500A;border:0.5px solid #C0DD97;padding:4px 9px;border-radius:20px;font-size:0.79rem;font-weight:500}
+.ph i{font-size:13px}
+.np{color:#B5D4F4;font-size:0.74rem;font-style:italic}
+
+.spin-wrap{text-align:center;padding:2.5rem;color:#185FA5}
+.spinner{width:36px;height:36px;border:3px solid #B5D4F4;border-top-color:#185FA5;border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.ok{background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-md);padding:0.7rem 1rem;font-size:0.85rem;color:#27500A;display:flex;align-items:center;gap:8px;margin:0.85rem 0}
+.pct{display:inline-block;background:#E6F1FB;color:#0C447C;border-radius:10px;padding:1px 8px;font-size:0.75rem;font-weight:500;margin-left:4px}
+.pi{font-size:0.74rem;color:#378ADD;text-align:right;margin-top:6px}
+.sep{height:0.5px;background:#B5D4F4;margin:1rem 0}
+
+.ftr{text-align:center;font-size:0.72rem;color:#378ADD;margin-top:1rem;padding-top:0.75rem;border-top:0.5px solid #B5D4F4}
+
+@media(max-width:540px){
+  .hdr{flex-direction:column;text-align:center;gap:0.75rem}
+  .hdr-icon{width:48px;height:48px}
+  .stats{gap:6px}.sc .n{font-size:1.2rem}
+  .bar{gap:6px}
+  th,td{padding:6px 7px;font-size:0.75rem}
+}
+</style>
+
+<h2 class="sr-only">Extractor de teléfonos móviles — Inversiones Tecsycom</h2>
+
+<div class="app">
+
+<div class="hdr">
+  <div class="hdr-icon"><i class="ti ti-antenna-bars-5" aria-hidden="true"></i></div>
+  <div>
+    <div class="hdr-title">Inversiones Tecsycom</div>
+    <div class="hdr-sub">
+      <i class="ti ti-device-mobile" style="font-size:14px" aria-hidden="true"></i>
+      Extractor de Teléfonos Móvil
+    </div>
+  </div>
+</div>
+
+<div class="card" id="upSec">
+  <div class="drop" id="dz" onclick="document.getElementById('fi').click()">
+    <div class="drop-icon"><i class="ti ti-file-spreadsheet" aria-hidden="true"></i></div>
+    <p>Arrastra tu archivo Excel aquí o haz clic para seleccionar</p>
+    <span>Compatibe con .xlsx y .xls — columna D para extracción de celulares</span>
+  </div>
+  <input type="file" id="fi" accept=".xlsx,.xls" />
+</div>
+
+<div id="ldSec" style="display:none" class="card">
+  <div class="spin-wrap">
+    <div class="spinner"></div>
+    <div style="font-weight:500;color:#0C447C">Procesando archivo...</div>
+    <div style="font-size:0.8rem;color:#378ADD;margin-top:4px">Extrayendo números de celular de la columna D</div>
+  </div>
+</div>
+
+<div id="dtSec" style="display:none">
+  <div class="stats">
+    <div class="sc"><div class="n" id="tot">0</div><div class="l">Registros</div></div>
+    <div class="sc g"><div class="n" id="fnd">0</div><div class="l">Celulares</div></div>
+    <div class="sc a"><div class="n" id="nfnd">0</div><div class="l">Sin celular</div></div>
+  </div>
+
+  <div class="ok" id="okBar">
+    <i class="ti ti-circle-check" style="font-size:16px;flex-shrink:0" aria-hidden="true"></i>
+    <span id="okMsg"></span>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="bar">
+    <input type="text" id="srch" placeholder="Buscar por cliente, dirección, celular..." oninput="filt()" />
+    <button class="btn btn-up" onclick="document.getElementById('fi').click()">
+      <i class="ti ti-upload" style="font-size:15px" aria-hidden="true"></i> Cargar otro
+    </button>
+    <button class="btn btn-dl" onclick="dlXls()">
+      <i class="ti ti-download" style="font-size:15px" aria-hidden="true"></i> Descargar Excel
+    </button>
+    <button class="btn btn-cl" onclick="reset()">
+      <i class="ti ti-refresh" style="font-size:15px" aria-hidden="true"></i> Limpiar
+    </button>
+  </div>
+
+  <div class="tw">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Dirección</th>
+          <th>Distrito</th>
+          <th>Observaciones (col. D)</th>
+          <th><i class="ti ti-device-mobile" style="font-size:13px;vertical-align:-1px" aria-hidden="true"></i> Celular</th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+  <div class="pi" id="pi"></div>
+
+  <div class="ftr">
+    <i class="ti ti-shield-check" style="font-size:12px;vertical-align:-1px" aria-hidden="true"></i>
+    Tecsycom &mdash; procesamiento local, sin envío de datos externos
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+var all=[], fil=[];
+
+function exPhone(t){
+  if(!t) return '';
+  var s=String(t);
+  var cleaned=s.replace(/cel[_\.\s]*/gi,'CEL ').replace(/titular[_\.\s\/]*/gi,'TIT ');
+  var patterns=[
+    /\b(9\d{2}[-\s]?\d{3}[-\s]?\d{3})\b/,
+    /\b(9\d{8})\b/,
+    /CEL\s*[:\-_]?\s*(9\d{2}[-\s]?\d{3}[-\s]?\d{3})/i,
+    /CEL\s*[:\-_]?\s*(9\d{8})/i,
+    /TIT\s*[:\-_\/]?\s*(9\d{2}[-\s]?\d{3}[-\s]?\d{3})/i,
+    /TIT\s*[:\-_\/]?\s*(9\d{8})/i,
+    /(9\d{2}[-]?\d{3}[-]?\d{3})/,
+    /(9\d{8})/
+  ];
+  for(var i=0;i<patterns.length;i++){
+    var m=cleaned.match(patterns[i]);
+    if(m){
+      var g=m[1]||m[0];
+      var n=g.replace(/[-\s]/g,'');
+      if(n.length===9&&n[0]==='9') return n;
+    }
+  }
+  return '';
+}
+
+var dz=document.getElementById('dz');
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('on')});
+dz.addEventListener('dragleave',function(){dz.classList.remove('on')});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('on');if(e.dataTransfer.files[0])proc(e.dataTransfer.files[0])});
+document.getElementById('fi').addEventListener('change',function(e){if(e.target.files[0])proc(e.target.files[0])});
+
+function proc(file){
+  document.getElementById('upSec').style.display='none';
+  document.getElementById('dtSec').style.display='none';
+  document.getElementById('ldSec').style.display='block';
+  var r=new FileReader();
+  r.onload=function(e){
+    try{
+      var wb=XLSX.read(e.target.result,{type:'array'});
+      var ws=wb.Sheets[wb.SheetNames[0]];
+      var data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      if(!data||data.length<2){document.getElementById('ldSec').style.display='none';return;}
+      all=[];
+      for(var i=1;i<data.length;i++){
+        var row=data[i];
+        if(!row||row.every(function(c){return !c;})) continue;
+        var d=row[3]||'';
+        all.push({num:i,a:String(row[0]||''),b:String(row[1]||''),c:String(row[2]||''),d:String(d),ph:exPhone(d)});
+      }
+      var found=all.filter(function(r){return r.ph;}).length;
+      document.getElementById('tot').textContent=all.length;
+      document.getElementById('fnd').textContent=found;
+      document.getElementById('nfnd').textContent=all.length-found;
+      var pct=all.length?Math.round(found/all.length*100):0;
+      document.getElementById('okMsg').innerHTML='Archivo procesado con éxito &mdash; <strong>'+found+' celulares</strong> extraídos de '+all.length+' registros <span class="pct">'+pct+'% éxito</span>';
+      fil=all.slice();
+      renderT();
+      document.getElementById('ldSec').style.display='none';
+      document.getElementById('dtSec').style.display='block';
+    }catch(err){
+      document.getElementById('ldSec').style.display='none';
+      document.getElementById('upSec').style.display='block';
+      alert('Error al leer el archivo: '+err.message);
+    }
+  };
+  r.readAsArrayBuffer(file);
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderT(){
+  var tb=document.getElementById('tb');
+  var h='';
+  for(var i=0;i<fil.length;i++){
+    var r=fil[i];
+    var d=r.d.length>110?r.d.substring(0,110)+'…':r.d;
+    var ph=r.ph?'<span class="ph"><i class="ti ti-device-mobile" aria-hidden="true"></i>'+r.ph+'</span>':'<span class="np">— sin celular</span>';
+    h+='<tr><td class="rn">'+r.num+'</td><td>'+esc(r.a)+'</td><td>'+esc(r.b)+'</td><td>'+esc(r.c)+'</td><td style="font-size:0.77rem;color:var(--color-text-secondary)">'+esc(d)+'</td><td>'+ph+'</td></tr>';
+  }
+  tb.innerHTML=h||'<tr><td colspan="6" style="text-align:center;padding:1.5rem;color:#378ADD">Sin resultados para esa búsqueda</td></tr>';
+  document.getElementById('pi').textContent='Mostrando '+fil.length+' de '+all.length+' registros';
+}
+
+function filt(){
+  var q=document.getElementById('srch').value.trim().toLowerCase();
+  fil=q?all.filter(function(r){return r.a.toLowerCase().includes(q)||r.b.toLowerCase().includes(q)||r.c.toLowerCase().includes(q)||r.d.toLowerCase().includes(q)||r.ph.includes(q);}):all.slice();
+  renderT();
+}
+
+function dlXls(){
+  var wb=XLSX.utils.book_new();
+  var ws=[['N°','CLIENTE','DIRECCIÓN','DISTRITO','OBSERVACIONES (COL D)','CELULAR']];
+  all.forEach(function(r){ws.push([r.num,r.a,r.b,r.c,r.d,r.ph]);});
+  var s=XLSX.utils.aoa_to_sheet(ws);
+  s['!cols']=[{wch:5},{wch:30},{wch:40},{wch:12},{wch:50},{wch:13}];
+  XLSX.utils.book_append_sheet(wb,s,'Celulares');
+  XLSX.writeFile(wb,'Tecsycom_Celulares.xlsx');
+}
+
+function reset(){
+  all=[];fil=[];
+  document.getElementById('fi').value='';
+  document.getElementById('srch').value='';
+  document.getElementById('tb').innerHTML='';
+  document.getElementById('dtSec').style.display='none';
+  document.getElementById('ldSec').style.display='none';
+  document.getElementById('upSec').style.display='block';
+}
+</script>
